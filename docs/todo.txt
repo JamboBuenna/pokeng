@@ -1,0 +1,22 @@
+Produce a web application to generate project code names based on a letter of the alphabet (input via textbox), using the poke-api, following the supplied design.
+
+Project code names should be alliterative in the format: "Adjective Pokemon"
+
+eg: H could return: "Hungry Haunter" or "Happy Horsea" and B may return "Bouncing Bulbasaur" or "Bright Bulbasaur"
+
+Pokemon details ( Sprite and stats) should be pulled dynamically from the PokeApi https://pokeapi.co/ Documentation is available at https://pokeapi.co/docsv2/
+
+The font used is Roboto Condensed at size and weights. H1 - 48px/Bold H2 - 40px/Bold H3 - 20px/Bold Body - 20px/Regular
+
+Colours used are: #016EC1 #FFCA00
+
+Spacing is based on an 8px grid.
+
+Use Git to keep a changelog - supply a link to bitbucket or github repository, as well as any required documentation to run the application.
+
+Bonus points:
+	Responsive
+	Transitions
+	Copy to clipboard
+	History
+	Other Features / Ideas
