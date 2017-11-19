@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {Observable} from "rxjs/Observable";
-import {HttpClient, HttpHeaders, HttpParams} from "@angular/common/http";
+import {HttpClient, HttpHeaders} from "@angular/common/http";
 
 @Injectable()
 export class PokemonApiService {
@@ -9,7 +9,7 @@ export class PokemonApiService {
     this.mapToLetter();
   }
 
-  baseApiPath = '/v2/'
+  baseApiPath = '/v2/';
 
   //This was pre-generated using the api & curl, after seeing the fair use policy on the api
   //If requested can change, or add additional pokemon.
@@ -169,14 +169,14 @@ export class PokemonApiService {
   ];
 
   //This gets generated at start-up of the service
-  pokemon = {}
+  pokemon = {};
 
   /**
    * Orders the pokemon in the pokemon object, which sorts them by letter.
    * TODO I should write a test for this.
    */
   private mapToLetter() {
-    var a, b, letterMatcher;
+    let a, b, letterMatcher;
     for (a = 0; a < 26; a++) {
       letterMatcher = (a + 10).toString(36);
       this.pokemon[letterMatcher] = [];
@@ -188,13 +188,13 @@ export class PokemonApiService {
     }
   }
 
-  public getRandomInt(min, max) {
+  getRandomInt(min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
   }
 
   /**
    * This function looks at the available pokemon, and works out how many match that letter
-   * It then takes a random one from that set and uses the retrieveOne call to get it.
+   * It then takes a random one from that set and uses the retrieveOnePokemon call to get it.
    * @param {String} letter
    */
   public getRandomPokemonByLetter(letter: string) {
@@ -216,7 +216,7 @@ export class PokemonApiService {
     }
   }
 
-  public retrieveOne(id: String): Observable<Pokemon> {
+  public retrieveOnePokemon(id: String): Observable<Pokemon> {
     let url = this.baseApiPath + "pokemon" + `/${id}`;
 
     return this.http.get<Pokemon>(url, {
@@ -225,9 +225,26 @@ export class PokemonApiService {
         .set("Access-Control-Allow-Methods", "GET")
     });
   }
+
+  public retrieveTypeFromUrl(url: string): Observable<PokemonType> {
+
+    return this.http.get<Pokemon>(url, {
+      headers: new HttpHeaders()
+        .set("Access-Control-Allow-Origin", "*")
+        .set("Access-Control-Allow-Methods", "GET")
+    });
+  }
+
+
+
 }
 
 export interface Pokemon {
+  id: number;
+  name?: string;
+}
+
+export interface PokemonType {
   id: number;
   name?: string;
 }

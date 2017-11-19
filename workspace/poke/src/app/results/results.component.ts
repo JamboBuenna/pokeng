@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from "@angular/router";
 import {PokemonApiService} from "../services/pokemon-api.service";
 import {ErrorHandlingService} from "../services/error-handling.service";
-import {type} from "os";
+import {WeaknessesService} from "../services/weaknesses.service";
 
 @Component({
   selector: 'app-results',
@@ -14,6 +14,7 @@ export class ResultsComponent implements OnInit {
   constructor(private router: Router,
               private route: ActivatedRoute,
               private papiService: PokemonApiService,
+              private weaknessService: WeaknessesService,
               private errorHandlingService: ErrorHandlingService) {
   }
 
@@ -25,6 +26,8 @@ export class ResultsComponent implements OnInit {
   }
 
   loading = true;
+
+  weaknessesArray = [];
 
   missingNo = {
     id: "-1",
@@ -50,7 +53,7 @@ export class ResultsComponent implements OnInit {
     if (this.pokemon.id === "-1") {
       this.pokemon = this.missingNo;
     } else {
-      this.papiService.retrieveOne(this.pokemon.id).subscribe(pokemonDetails => {
+      this.papiService.retrieveOnePokemon(this.pokemon.id).subscribe(pokemonDetails => {
         this.loading = false;
         if (pokemonDetails) {
           this.pokemon.name = this.capitaliseString(pokemonDetails['name']);
@@ -58,8 +61,7 @@ export class ResultsComponent implements OnInit {
           this.pokemon.weight = pokemonDetails['weight'].toString();
           this.pokemon.imagePath = pokemonDetails['sprites'].front_default;
 
-          this.getWeaknesses(pokemonDetails);
-          this.getTypes(pokemonDetails);
+          this.getTypesAndWeaknesses(pokemonDetails);
         }
       }, err => {
         this.errorHandlingService.handleError(err);
@@ -67,15 +69,6 @@ export class ResultsComponent implements OnInit {
     }
   }
 
-  /**
-   * TODO - Get weaknesses
-   * @param pokemonDetails
-   */
-  getWeaknesses(pokemonDetails) {
-    this.pokemon.weaknesses = "I am a pokemon with no weakness"
-
-
-  }
 
   /**
    * Capitalises the inputted String so that it looks nicer :-)
@@ -89,19 +82,43 @@ export class ResultsComponent implements OnInit {
   /**
    * This function takes in the returned pokemon data and iterates through the types data
    * to update the pokemon types list with just the names, with comma seperation.
+   * It also uses the same itterator to trigger the call to get the weaknesses info.
    * @param pokemonDetails
    */
-  getTypes(pokemonDetails) {
-    debugger;
-    var i,
+  getTypesAndWeaknesses(pokemonDetails) {
+    let i,
       typesArray = pokemonDetails['types'],
       typeStringArray = [];
 
     for (i = 0; i < typesArray.length; i++) {
       typeStringArray.push(this.capitaliseString(typesArray[i].type.name));
+      this.addTypeWeaknesses(typesArray[i].type);
     }
+
     this.pokemon.types = typeStringArray.join();
   }
+
+  addToWeaknessCallback(weaknessesForType) {
+    debugger;
+    let i;
+    for (i = 0; i < weaknessesForType.length; i++) {
+      if (this.weaknessesArray.indexOf(weaknessesForType[i]) === -1) {
+        this.weaknessesArray.push(weaknessesForType[i]);
+      }
+    }
+    this.pokemon.weaknesses = this.weaknessesArray.join();
+  }
+
+
+  /**
+   * Add to the weeknesses array, any unique weakness names for the passed in type of pokemon.
+   * @param type
+   * @returns {any}
+   */
+  addTypeWeaknesses(type) {
+    this.weaknessService.getWeaknessesForType(type, this.addToWeaknessCallback, this);
+  }
+
 
   showInitial() {
     this.router.navigate(['initial'])
