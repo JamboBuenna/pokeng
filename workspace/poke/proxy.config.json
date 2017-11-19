@@ -1,7 +1,8 @@
 {
-  "/pokeapi": {
-    "target": "http://pokeapi.co/api",
-    "secure": false,
-    "logLevel": "debug"
+  "/v2/*": {
+    "target": "https://pokeapi.co/api/",
+    "secure": true,
+    "logLevel": "info",
+    "changeOrigin": true
   }
 }

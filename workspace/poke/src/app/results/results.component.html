@@ -1,14 +1,26 @@
-Pokemon picture.
+<div *ngIf="loading">
+  <!--
+  So oddly, there appears to be something weird with the progress-spinner.
+  <mat-spinner>
+   </mat-spinner>
+   -->
+  Loading...
+</div>
+<div *ngIf="!loading">
 
-Pokemon name
 
-HEIGHT - Example height
+  <img src="{{pokemon.imagePath}}" alt="A picture of the Pokemon {{pokemon.name}}">
 
-WEIGHT - Example weight
+  Pokemon name - {{pokemon.name}}
 
-TYPE - Example types (they can be multiple types???)
+  HEIGHT - {{pokemon.height}}
 
-WEAKNESSES - Example weaknesses (multiple)
+  WEIGHT - {{pokemon.weight}}
 
-<br/>
-<button (click)="showInitial()">Generate another</button>
+  TYPE - {{pokemon.types}}
+
+  WEAKNESSES - {{pokemon.weaknesses}}
+
+  <br/>
+  <button (click)="showInitial()">Generate another</button>
+</div>

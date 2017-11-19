@@ -1,7 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {Router} from "@angular/router";
 import {PokemonApiService} from "../../services/pokemon-api.service";
-import {ErrorHandlingService} from "../../services/error-handling.service";
 
 @Component({
   selector: 'app-letter-picker',
@@ -11,31 +10,20 @@ import {ErrorHandlingService} from "../../services/error-handling.service";
 export class LetterPickerComponent implements OnInit {
 
   constructor(private router: Router,
-              private errorHandlingService: ErrorHandlingService,
               private papiService: PokemonApiService) {
   }
 
   ngOnInit() {
   }
 
+  pokemonDetails = {
+    firstLetter: ''
+  };
+
   requestPokemon() {
+    let randomPokemon = this.papiService.getRandomPokemonByLetter(this.pokemonDetails.firstLetter);
+    this.router.navigate(['results', {id: randomPokemon.id}])
 
-
-    this.papiService.retrieveOne(1)
-      .subscribe(success => {
-        if (success) {
-          debugger;
-        }
-      }, err => {
-        this.errorHandlingService.handleError(err);
-      });
-
-
-
-  }
-
-  showResults() {
-    this.router.navigate(['results']);
   }
 
 }

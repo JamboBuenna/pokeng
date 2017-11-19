@@ -10,6 +10,9 @@ import {LetterPickerComponent} from "./letter-picker/letter-picker.component";
   ],
   declarations: [
     LetterPickerComponent
+  ],
+  exports: [
+    LetterPickerComponent
   ]
 })
 export class PokemonSelectorModule {
