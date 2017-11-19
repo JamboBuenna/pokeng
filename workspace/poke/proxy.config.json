@@ -1,0 +1,7 @@
+{
+  "/pokeapi": {
+    "target": "http://pokeapi.co/api",
+    "secure": false,
+    "logLevel": "debug"
+  }
+}
