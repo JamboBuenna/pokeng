@@ -1,0 +1,6 @@
+.inputForm {
+  -moz-border-radius: 10px; /* Firefox */
+  -webkit-border-radius: 10px; /* Safari, Chrome */
+  border-radius: 10px; /* CSS3 */
+  border-color: #016EC1;
+}
