@@ -1,1 +1,35 @@
 /* You can add global styles to this file, and also import other style files */
+
+/*
+I hate not using sass :-(
+Roboto Condensed at size and weights. H1 - 48px/Bold H2 - 40px/Bold H3 - 20px/Bold Body - 20px/Regular
+*/
+
+h1 {
+  color: #016EC1;
+  font-family: "Roboto-Condensed-Bold";
+  font-size: 48px;
+}
+
+h2 {
+  color: #016EC1;
+  font-family: "Roboto-Condensed-Bold";
+  font-size: 40px;
+}
+
+h3 {
+  color: #016EC1;
+  font-family: "Roboto-Condensed-Bold";
+  font-size: 20px;
+}
+
+body {
+  color: #016EC1;
+  font-family: "Roboto-Condensed";
+  font-size: 20px;
+}
+
+.elementTitle {
+  color: #016EC1;
+  font-family: "Roboto-Regular"
+}

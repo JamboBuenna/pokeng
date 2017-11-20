@@ -33,6 +33,8 @@ export class ResultsComponent implements OnInit {
    */
   weaknessesArray = [];
 
+  calculatedAdjective = "Adjective";
+
   missingNo = {
     id: "-1",
     name: 'missingNo',
@@ -40,7 +42,7 @@ export class ResultsComponent implements OnInit {
     weight: 'Unknown',
     types: 'Unknown',
     weaknesses: 'Unknown',
-    imagePath: '/assets/images/pokemonLogo.png'
+    imagePath: '/assets/images/MissingNo.png'
   };
 
   pokemon = {
@@ -60,6 +62,7 @@ export class ResultsComponent implements OnInit {
    */
   updatePokemon() {
     if (this.pokemon.id === "-1") {
+      this.loading = false;
       this.pokemon = this.missingNo;
     } else {
       this.papiService.retrieveOnePokemon(this.pokemon.id).subscribe(pokemonDetails => {
@@ -87,12 +90,12 @@ export class ResultsComponent implements OnInit {
   addTypeWeaknesses(weaknessesForType): string {
     let i;
     for (i = 0; i < weaknessesForType.length; i++) {
-      var capitalisedWeakness = this.capitaliseString(weaknessesForType[i]);
+      let capitalisedWeakness = this.capitaliseString(weaknessesForType[i]);
       if (this.weaknessesArray.indexOf(capitalisedWeakness) === -1) {
         this.weaknessesArray.push(capitalisedWeakness);
       }
     }
-    return this.weaknessesArray.join();
+    return this.weaknessesArray.join(", ");
   }
 
   /**
@@ -130,7 +133,7 @@ export class ResultsComponent implements OnInit {
     for (i = 0; i < typesArray.length; i++) {
       typeStringArray.push(this.capitaliseString(typesArray[i].type.name));
     }
-    this.pokemon.types = typeStringArray.join();
+    this.pokemon.types = typeStringArray.join(", ");
   }
 
   /**

@@ -9,18 +9,53 @@
 <div *ngIf="!loading">
 
 
-  <img src="{{pokemon.imagePath}}" alt="A picture of the Pokemon {{pokemon.name}}">
+  <div style="text-align:center">
+    <img style="width: 200px" src="/assets/images/pokemonLogo.png"/><br/>
 
-  Pokemon name - {{pokemon.name}}
+    <div class="wrap">
+      <img class="left" style="height: 400px; width: 400px" src="{{pokemon.imagePath}}"
+           alt="A picture of the Pokemon {{pokemon.name}}">
+      <h1 class='right'> {{calculatedAdjective}} {{pokemon.name}}</h1>
 
-  HEIGHT - {{pokemon.height}}
+      <div class='right'>
+        <table>
+          <tr>
+            <td class="pokestats">
+              <h3>
+                HEIGHT
+              </h3>
+              {{pokemon.height}}cm
+            </td>
+            <td class="pokestats">
+              <h3>
+                WEIGHT
+              </h3>
+              {{pokemon.weight}}kg
+            </td>
+            <td class="pokestats">
+              <h3>
+                TYPE
+              </h3>
+              {{pokemon.types}}
+            </td>
+          </tr>
+          <tr>
+            <td class="pokestats">
+              <h3>
+                WEAKNESSES
+              </h3>
+              {{pokemon.weaknesses}}
+            </td>
+            <td></td>
+            <td></td>
+          </tr>
+        </table>
+      </div>
 
-  WEIGHT - {{pokemon.weight}}
-
-  TYPE - {{pokemon.types}}
-
-  WEAKNESSES - {{pokemon.weaknesses}}
-
+    </div>
+    ​
   <br/>
   <button (click)="showInitial()">Generate another</button>
+
+  </div>
 </div>
