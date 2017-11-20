@@ -27,6 +27,10 @@ export class ResultsComponent implements OnInit {
 
   loading = true;
 
+  /**
+   * Arrar if all the unique weaknesses a pokemon has.
+   * @type {Array}
+   */
   weaknessesArray = [];
 
   missingNo = {
@@ -49,6 +53,11 @@ export class ResultsComponent implements OnInit {
     imagePath: ''
   };
 
+  /**
+   * This request looks at the current pokemon number, often set by the router, uses
+   * the pokemon-api service to request the pokemons details and displays it on the page.
+   * It also starts the process of calculating the weaknesses given the types.
+   */
   updatePokemon() {
     if (this.pokemon.id === "-1") {
       this.pokemon = this.missingNo;
@@ -61,7 +70,8 @@ export class ResultsComponent implements OnInit {
           this.pokemon.weight = pokemonDetails['weight'].toString();
           this.pokemon.imagePath = pokemonDetails['sprites'].front_default;
 
-          this.getTypesAndWeaknesses(pokemonDetails);
+          this.getTypes(pokemonDetails);
+          this.getWeaknesses(pokemonDetails);
         }
       }, err => {
         this.errorHandlingService.handleError(err);
@@ -69,6 +79,33 @@ export class ResultsComponent implements OnInit {
     }
   }
 
+  /**
+   * This takes in an array of new weaknesses and ensures that
+   * @param {string[]} weaknessesForType
+   * @returns {string}
+   */
+  addTypeWeaknesses(weaknessesForType): string {
+    let i;
+    for (i = 0; i < weaknessesForType.length; i++) {
+      var capitalisedWeakness = this.capitaliseString(weaknessesForType[i]);
+      if (this.weaknessesArray.indexOf(capitalisedWeakness) === -1) {
+        this.weaknessesArray.push(capitalisedWeakness);
+      }
+    }
+    return this.weaknessesArray.join();
+  }
+
+  /**
+   * This clear the weaknesses array before using the weaknesses service to generate
+   * multiple observables that rebuild the weaknesses.
+   * @param pokemonDetails
+   */
+  getWeaknesses(pokemonDetails) {
+    this.weaknessesArray = [];
+    this.weaknessService.getWeaknessFromPokemonDetails(pokemonDetails).subscribe((typeSpecificWeaknesses) => {
+      this.pokemon.weaknesses = this.addTypeWeaknesses(typeSpecificWeaknesses);
+    });
+  }
 
   /**
    * Capitalises the inputted String so that it looks nicer :-)
@@ -85,41 +122,20 @@ export class ResultsComponent implements OnInit {
    * It also uses the same itterator to trigger the call to get the weaknesses info.
    * @param pokemonDetails
    */
-  getTypesAndWeaknesses(pokemonDetails) {
+  getTypes(pokemonDetails) {
     let i,
       typesArray = pokemonDetails['types'],
       typeStringArray = [];
 
     for (i = 0; i < typesArray.length; i++) {
       typeStringArray.push(this.capitaliseString(typesArray[i].type.name));
-      this.addTypeWeaknesses(typesArray[i].type);
     }
-
     this.pokemon.types = typeStringArray.join();
   }
 
-  addToWeaknessCallback(weaknessesForType) {
-    debugger;
-    let i;
-    for (i = 0; i < weaknessesForType.length; i++) {
-      if (this.weaknessesArray.indexOf(weaknessesForType[i]) === -1) {
-        this.weaknessesArray.push(weaknessesForType[i]);
-      }
-    }
-    this.pokemon.weaknesses = this.weaknessesArray.join();
-  }
-
-
   /**
-   * Add to the weeknesses array, any unique weakness names for the passed in type of pokemon.
-   * @param type
-   * @returns {any}
+   * This uses the router to navigate back to the initial page.
    */
-  addTypeWeaknesses(type) {
-    this.weaknessService.getWeaknessesForType(type, this.addToWeaknessCallback, this);
-  }
-
-
   showInitial() {
     this.router.navigate(['initial'])
   }
