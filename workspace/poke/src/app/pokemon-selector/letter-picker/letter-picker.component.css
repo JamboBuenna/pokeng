@@ -1,4 +1,44 @@
 .inputForm {
-  border-radius: 15px; /* CSS3 */
+  border-radius: 15px;
   border-color: #016EC1;
+  width: 70%;
+  height: 32px;
+  padding: 0 16px;
+  outline:none;
+}
+
+::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+  color: #016EC1;
+}
+::-moz-placeholder { /* Firefox 19+ */
+  color: #016EC1;
+}
+:-ms-input-placeholder { /* IE 10+ */
+  color: #016EC1;
+}
+:-moz-placeholder { /* Firefox 18- */
+  color: #016EC1;
+}
+
+@import url("//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css");
+.search {
+  position: relative;
+  width:100%;
+}
+
+.search input {
+  width: 70%;
+  align-items: center;
+}
+
+.search .layout-button {
+  width: 70%;
+  position: absolute;
+  top: 8px;
+  left: 15%;
+}
+
+.search .fa-search {
+  position: absolute;
+  right: 8px;
 }

@@ -1,6 +1,13 @@
 <form (ngSubmit)="requestPokemon()" #selectorForm="ngForm">
-  <input type="text" class="inputForm" name="firstLetter"
+
+  <div class="search">
+    <span class="layout-button">
+      <span class="fa fa-search">
+      </span>
+    </span>
+  <input type="text" placeholder="CHOOSE YOUR LETTER" class="inputForm" name="firstLetter"
          [(ngModel)]="pokemonDetails.firstLetter"/>
-  <br/>
-  <button>Generate</button>
+  </div>
+
+  <button>GENERATE POKEMON</button>
 </form>

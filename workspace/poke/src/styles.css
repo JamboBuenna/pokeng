@@ -1,9 +1,6 @@
 /* You can add global styles to this file, and also import other style files */
 
-/*
-I hate not using sass :-(
-Roboto Condensed at size and weights. H1 - 48px/Bold H2 - 40px/Bold H3 - 20px/Bold Body - 20px/Regular
-*/
+@import url("//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css");
 
 h1 {
   color: #016EC1;
@@ -29,7 +26,12 @@ body {
   font-size: 20px;
 }
 
-.elementTitle {
-  color: #016EC1;
-  font-family: "Roboto-Regular"
+button {
+  background-color: #FFCA00;
+  color: white;
+  font-size: 20px;
+  font-family: "Roboto-Condensed-Bold";
+  border-radius: 30px;
+  padding:8px 24px;
+  border: none;
 }
