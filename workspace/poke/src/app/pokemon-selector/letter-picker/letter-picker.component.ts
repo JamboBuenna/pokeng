@@ -7,10 +7,17 @@ import {PokemonApiService} from "../../services/pokemon-api.service";
   templateUrl: './letter-picker.component.html',
   styleUrls: ['./letter-picker.component.css']
 })
+
+/**
+ * This component provides the pokemon entry field and submit button
+ * and provides error handling for the invalid cases / requests
+ */
 export class LetterPickerComponent implements OnInit {
 
-  constructor(private router: Router,
-              private papiService: PokemonApiService) {
+  constructor(
+    private router: Router,
+    private papiService: PokemonApiService
+  ) {
   }
 
   ngOnInit() {

@@ -1,16 +1,18 @@
 .wrap {
   margin: 0 auto;
-  width: 900px;
+  width: 1000px;
 }
 
 .left {
-  width: 200px;
+  width: 400px;
+  height:400px;
   float: left;
 }
 
 .right {
-  margin-left: 220px;
-  width: 680px;
+  margin-left: 420px;
+  height: 600px;
+  width: 780px;
 }
 
 .pokestats {

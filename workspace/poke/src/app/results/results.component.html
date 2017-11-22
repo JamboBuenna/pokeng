@@ -4,20 +4,21 @@
   <mat-spinner>
    </mat-spinner>
    -->
+
+  <div style="text-align:center">
   Loading...
+  </div>
 </div>
 <div *ngIf="!loading">
 
-
   <div style="text-align:center">
-    <img style="width: 200px" src="/assets/images/pokemonLogo.png"/><br/>
-
     <div class="wrap">
-      <img class="left" style="height: 400px; width: 400px" src="{{pokemon.imagePath}}"
+      <img class="left" src="{{pokemon.imagePath}}"
            alt="A picture of the Pokemon {{pokemon.name}}">
-      <h1 class='right'> {{calculatedAdjective}} {{pokemon.name}}</h1>
+     <span class="right">
+      <h1> {{calculatedAdjective}} {{pokemon.name}}</h1>
 
-      <div class='right'>
+      <div>
         <table>
           <tr>
             <td class="pokestats">
@@ -51,11 +52,11 @@
           </tr>
         </table>
       </div>
+     </span>
 
     </div>
-    ​
-  <br/>
-  <button (click)="showInitial()">GENERATE ANOTHER</button>
-
+    <br/>
   </div>
+  <button (click)="showInitial()">GENERATE ANOTHER</button>
 </div>
+

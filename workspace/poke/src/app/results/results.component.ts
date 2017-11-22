@@ -35,7 +35,7 @@ export class ResultsComponent implements OnInit {
    */
   weaknessesArray = [];
 
-  calculatedAdjective = "Adjective";
+  calculatedAdjective = "";
 
   missingNo = {
     id: "-1",
@@ -70,7 +70,7 @@ export class ResultsComponent implements OnInit {
       this.papiService.retrieveOnePokemon(this.pokemon.id).subscribe(pokemonDetails => {
         this.loading = false;
         if (pokemonDetails) {
-          this.pokemon.name = this.capitaliseString(pokemonDetails['name']);
+          this.pokemon.name = pokemonDetails['name'].toLocaleUpperCase();
           this.pokemon.height = pokemonDetails['height'].toString();
           this.pokemon.weight = pokemonDetails['weight'].toString();
           this.pokemon.imagePath = pokemonDetails['sprites'].front_default;
@@ -80,7 +80,7 @@ export class ResultsComponent implements OnInit {
 
           let pokemonFirstLetter = this.pokemon.name.charAt(0);
           this.adjectivesService.getAdjectiveStartingWithLetter(pokemonFirstLetter).subscribe(adjective => {
-            this.calculatedAdjective = adjective;
+            this.calculatedAdjective = adjective.toLocaleUpperCase();
           })
         }
       }, err => {

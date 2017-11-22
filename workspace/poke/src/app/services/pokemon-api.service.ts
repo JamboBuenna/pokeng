@@ -1,11 +1,15 @@
 import {Injectable} from '@angular/core';
 import {Observable} from "rxjs/Observable";
 import {HttpClient, HttpHeaders} from "@angular/common/http";
+import {UtilService} from "./util.service";
 
 @Injectable()
 export class PokemonApiService {
 
-  constructor(private http: HttpClient) {
+  constructor(
+    private http: HttpClient,
+    private utilService: UtilService,
+  ) {
     this.mapToLetter();
   }
 
@@ -188,10 +192,6 @@ export class PokemonApiService {
     }
   }
 
-  getRandomInt(min, max) {
-    return Math.floor(Math.random() * (max - min + 1)) + min;
-  }
-
   /**
    * This function looks at the available pokemon, and works out how many match that letter
    * It then takes a random one from that set and uses the retrieveOnePokemon call to get it.
@@ -207,7 +207,7 @@ export class PokemonApiService {
       }
     } else {
       let numberOfPokemon = relevantPokemon.length;
-      let randomPokemonIndex = this.getRandomInt(1, numberOfPokemon) - 1;
+      let randomPokemonIndex = this.utilService.getRandomInt(1, numberOfPokemon) - 1;
       let chosenPokemon = relevantPokemon[randomPokemonIndex];
 
       console.log("Out of " + numberOfPokemon + " Pokemon that matched " + letter +
@@ -235,8 +235,6 @@ export class PokemonApiService {
     });
   }
 
-
-
 }
 
 export interface Pokemon {
@@ -246,5 +244,4 @@ export interface Pokemon {
 
 export interface PokemonType {
   id: number;
-  name?: string;
 }

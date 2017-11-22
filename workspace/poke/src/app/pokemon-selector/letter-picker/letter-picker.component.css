@@ -6,6 +6,7 @@
   padding: 0 16px;
   margin-bottom: 32px;
   outline:none;
+  margin-bottom: 48px;
 }
 
 ::-webkit-input-placeholder { /* Chrome/Opera/Safari */
@@ -21,7 +22,6 @@
   color: #016EC1;
 }
 
-@import url("//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css");
 .search {
   position: relative;
   width:100%;

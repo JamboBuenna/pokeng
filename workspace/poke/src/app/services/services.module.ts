@@ -5,6 +5,7 @@ import {HttpClientModule} from "@angular/common/http";
 import {ErrorHandlingService} from "./error-handling.service";
 import {WeaknessesService} from "./weaknesses.service";
 import {AdjectivesService} from "./adjectives.service";
+import {UtilService} from "./util.service";
 
 @NgModule({
   imports: [
@@ -15,8 +16,9 @@ import {AdjectivesService} from "./adjectives.service";
   providers: [
     AdjectivesService,
     ErrorHandlingService,
+    PokemonApiService,
+    UtilService,
     WeaknessesService,
-    PokemonApiService
   ]
 })
 export class ServicesModule {
