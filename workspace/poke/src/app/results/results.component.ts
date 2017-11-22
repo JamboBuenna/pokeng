@@ -3,6 +3,7 @@ import {ActivatedRoute, Router} from "@angular/router";
 import {PokemonApiService} from "../services/pokemon-api.service";
 import {ErrorHandlingService} from "../services/error-handling.service";
 import {WeaknessesService} from "../services/weaknesses.service";
+import {AdjectivesService} from "../services/adjectives.service";
 
 @Component({
   selector: 'app-results',
@@ -15,7 +16,8 @@ export class ResultsComponent implements OnInit {
               private route: ActivatedRoute,
               private papiService: PokemonApiService,
               private weaknessService: WeaknessesService,
-              private errorHandlingService: ErrorHandlingService) {
+              private errorHandlingService: ErrorHandlingService,
+              private adjectivesService: AdjectivesService) {
   }
 
   ngOnInit() {
@@ -75,6 +77,11 @@ export class ResultsComponent implements OnInit {
 
           this.getTypes(pokemonDetails);
           this.getWeaknesses(pokemonDetails);
+
+          let pokemonFirstLetter = this.pokemon.name.charAt(0);
+          this.adjectivesService.getAdjectiveStartingWithLetter(pokemonFirstLetter).subscribe(adjective => {
+            this.calculatedAdjective = adjective;
+          })
         }
       }, err => {
         this.errorHandlingService.handleError(err);

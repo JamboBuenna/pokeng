@@ -28,6 +28,7 @@ body {
 
 button {
   background-color: #FFCA00;
+  cursor: pointer;
   color: white;
   font-size: 20px;
   font-family: "Roboto-Condensed-Bold";

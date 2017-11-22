@@ -4,6 +4,7 @@ import {PokemonApiService} from "./pokemon-api.service";
 import {HttpClientModule} from "@angular/common/http";
 import {ErrorHandlingService} from "./error-handling.service";
 import {WeaknessesService} from "./weaknesses.service";
+import {AdjectivesService} from "./adjectives.service";
 
 @NgModule({
   imports: [
@@ -12,6 +13,7 @@ import {WeaknessesService} from "./weaknesses.service";
   ],
   declarations: [],
   providers: [
+    AdjectivesService,
     ErrorHandlingService,
     WeaknessesService,
     PokemonApiService
