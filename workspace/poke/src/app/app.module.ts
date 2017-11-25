@@ -9,6 +9,8 @@ import {ServicesModule} from "./services/services.module";
 import {FormsModule} from "@angular/forms";
 import {PokemonSelectorModule} from "./pokemon-selector/pokemon-selector.module";
 
+declare var require: any;
+
 
 @NgModule({
   declarations: [
