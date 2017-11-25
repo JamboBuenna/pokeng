@@ -18,7 +18,7 @@ describe('AdjectivesService', () => {
       expect(service.getAdjectiveStartingWithLetter('a').subscribe(result => expect(
         result.charAt(0) === 'a')));
     }));
-  })
+  });
 
 
 });

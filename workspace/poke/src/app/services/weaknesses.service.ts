@@ -1,10 +1,10 @@
 import {Injectable} from '@angular/core';
-import {PokemonApiService} from "./pokemon-api.service";
-import {ErrorHandlingService} from "./error-handling.service";
-import "rxjs/add/operator/map";
-import {Observable} from "rxjs/Observable";
-import "rxjs/add/observable/of";
-import "rxjs/add/observable/merge";
+import {PokemonApiService} from './pokemon-api.service';
+import {ErrorHandlingService} from './error-handling.service';
+import 'rxjs/add/operator/map';
+import {Observable} from 'rxjs/Observable';
+import 'rxjs/add/observable/of';
+import 'rxjs/add/observable/merge';
 
 @Injectable()
 export class WeaknessesService {
@@ -27,16 +27,15 @@ export class WeaknessesService {
    * @returns {Observable<any>}
    */
   getWeaknessFromPokemonDetails(pokemonDetails: any): Observable<any> {
-    let observableArray = [];
-    let typesArray = pokemonDetails['types'],
-      i;
+    const observableArray = [];
+    const typesArray = pokemonDetails['types'];
+    let i;
 
     for (i = 0; i < typesArray.length; i++) {
       observableArray.push(this.getWeaknessesForType(typesArray[i].type));
     }
 
-    let observable = Observable.merge(...observableArray);
-    return observable;
+    return Observable.merge(...observableArray);
   }
 
   /**
@@ -46,7 +45,7 @@ export class WeaknessesService {
    * @returns {Observable<string[]>}
    */
   getWeaknessesForType(type: any): Observable<string[]> {
-    //If we've already got the types cached... we can just do a quick lookup!
+    // If we've already got the types cached... we can just do a quick lookup!
     if (this.cachedWeaknesses[type.name] !== undefined) {
       return Observable.of(this.cachedWeaknesses[type.name]);
     } else {
@@ -62,21 +61,21 @@ export class WeaknessesService {
    * @returns {Observable<string[]>}
    */
   requestWeaknessForType(type: any): Observable<string[]> {
-    let url = type.url;
+    const url = type.url;
 
     return this.papiService.retrieveTypeFromUrl(url).map(pokemonTypeDetails => {
-      let weaknessesArray = [];
+      const weaknessesArray = [];
 
       if (pokemonTypeDetails) {
-        //I'd discuss with end-user if the other status cases count as a weakness.
-        let i,
-          doubleDamageFrom = pokemonTypeDetails['damage_relations'].double_damage_from;
+        // I'd discuss with end-user if the other status cases count as a weakness.
+        let i;
+        const doubleDamageFrom = pokemonTypeDetails['damage_relations'].double_damage_from;
 
         for (i = 0; i < doubleDamageFrom.length; i++) {
           weaknessesArray.push(doubleDamageFrom[i].name);
         }
 
-        //Update the cachedWeaknesses, if it's not been updated already...
+        // Update the cachedWeaknesses, if it's not been updated already...
         if (this.cachedWeaknesses[type.name] === undefined) {
           this.cachedWeaknesses[type.name] = weaknessesArray;
         }

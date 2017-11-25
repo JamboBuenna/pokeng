@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
-import {Router} from "@angular/router";
-import {PokemonApiService} from "../../services/pokemon-api.service";
+import {Router} from '@angular/router';
+import {PokemonApiService} from '../../services/pokemon-api.service';
 
 @Component({
   selector: 'app-letter-picker',
@@ -14,6 +14,10 @@ import {PokemonApiService} from "../../services/pokemon-api.service";
  */
 export class LetterPickerComponent implements OnInit {
 
+  pokemonDetails = {
+    firstLetter: ''
+  };
+
   constructor(
     private router: Router,
     private papiService: PokemonApiService
@@ -23,9 +27,7 @@ export class LetterPickerComponent implements OnInit {
   ngOnInit() {
   }
 
-  pokemonDetails = {
-    firstLetter: ''
-  };
+
 
   /**
    * This gets a random pokemon that matches the entered letter and then navigates to the results page.
@@ -33,17 +35,17 @@ export class LetterPickerComponent implements OnInit {
    * the form bindings so that the form / styling shows it blocks submission in invalid cases.
    */
   requestPokemon() {
-    let firstLetter = this.pokemonDetails.firstLetter;
+    const firstLetter = this.pokemonDetails.firstLetter;
     if (firstLetter.length === 1) {
-      let randomPokemon = this.papiService.getRandomPokemonByLetter(firstLetter);
+      const randomPokemon = this.papiService.getRandomPokemonByLetter(firstLetter);
 
       if (randomPokemon === undefined) {
-        alert("No pokemon are available that start with the letter -" + this.pokemonDetails.firstLetter)
+        alert('No pokemon are available that start with the letter -' + this.pokemonDetails.firstLetter);
       }
 
-      this.router.navigate(['results', {id: randomPokemon.id}])
+      this.router.navigate(['results', {id: randomPokemon.id}]);
     } else {
-      alert("You need to enter one letter");
+      alert('You need to enter one letter');
     }
   }
 

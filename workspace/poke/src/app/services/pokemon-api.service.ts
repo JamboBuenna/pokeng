@@ -13,7 +13,7 @@ export class PokemonApiService {
     private utilService: UtilService
   ) {
 
-    var wrapper = require('pokeapi-js-wrapper');
+    const wrapper = require('pokeapi-js-wrapper');
     this.pokedex = new wrapper.Pokedex();
 
 
@@ -226,14 +226,14 @@ export class PokemonApiService {
       return {
         id: -1,
         name: 'missingNo'
-      }
+      };
     } else {
       const numberOfPokemon = relevantPokemon.length;
       const randomPokemonIndex = this.utilService.getRandomInt(1, numberOfPokemon) - 1;
       const chosenPokemon = relevantPokemon[randomPokemonIndex];
 
       console.log('Out of ' + numberOfPokemon + ' Pokemon that matched ' + letter +
-        '. You chose number ' + chosenPokemon.id + " " + chosenPokemon.name);
+        '. You chose number ' + chosenPokemon.id + ' ' + chosenPokemon.name);
       return chosenPokemon;
     }
   }
@@ -241,17 +241,21 @@ export class PokemonApiService {
   public retrieveOnePokemon(id: String): Observable<Pokemon> {
     const url = this.baseApiPath + 'pokemon' + `/${id}`;
 
-    //They provide a wrapper that is also currently not working with CORS requests
-    this.pokedex.getPokemonById(id).then(function (response) {
-      console.log(response);
-    });
+    /*The poke-api team also provide a wrapper, however that that is also currently not
+     working with CORS requests
+   this.pokedex.getPokemonByName('Abra').then(function (response) {
+     console.log(response);
+   });
+   */
+
 
     return this.http.get<Pokemon>(url, {
       headers: new HttpHeaders()
-        .set("Access-Control-Allow-Origin", "*")
-        .set("Access-Control-Allow-Credentials", "true")
-        .set("Access-Control-Allow-Methods", "GET,HEAD,OPTIONS,POST,PUT")
-        .set("Access-Control-Allow-Headers", "Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers")
+        .set('Access-Control-Allow-Origin', '*')
+        .set('Access-Control-Allow-Credentials', 'true')
+        .set('Access-Control-Allow-Methods', 'GET,HEAD,OPTIONS,POST,PUT')
+        .set('Access-Control-Allow-Headers', 'Access-Control-Allow-Headers, Origin,Accept, X-Requested-With,' +
+          ' Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers')
     });
   }
 
@@ -259,9 +263,9 @@ export class PokemonApiService {
 
     return this.http.get<Pokemon>(url, {
       headers: new HttpHeaders()
-        .set("Access-Control-Allow-Origin", "*")
-        .set("Access-Control-Allow-Methods", "GET")
-        .set("User-Agent", "")
+        .set('Access-Control-Allow-Origin', '*')
+        .set('Access-Control-Allow-Methods', 'GET')
+        .set('User-Agent', '')
 
     });
   }

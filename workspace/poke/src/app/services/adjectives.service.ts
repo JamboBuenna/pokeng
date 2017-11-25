@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
-import {Observable} from "rxjs/Observable";
-import {UtilService} from "./util.service";
+import {Observable} from 'rxjs/Observable';
+import {UtilService} from './util.service';
 
 @Injectable()
 /**
@@ -1157,14 +1157,14 @@ export class AdjectivesService {
    * @returns {Observable<string>}
    */
   getAdjectiveStartingWithLetter(letter: string): Observable<string> {
-    let letterSpecificArray = this.adjectivesList.filter(function (item) {
+    const letterSpecificArray = this.adjectivesList.filter(function (item) {
       return item.indexOf(letter.toLowerCase()) === 0;
     });
 
 
-    let numberOfAdjectives = letterSpecificArray.length;
-    let randomAdjectiveIndex = this.utilService.getRandomInt(1, numberOfAdjectives) - 1;
-    //Prior to getting the service in
+    const numberOfAdjectives = letterSpecificArray.length;
+    const randomAdjectiveIndex = this.utilService.getRandomInt(1, numberOfAdjectives) - 1;
+    // Prior to getting the service in
     return Observable.of(letterSpecificArray[randomAdjectiveIndex]);
   }
 

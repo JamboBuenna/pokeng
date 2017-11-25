@@ -1,7 +1,7 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
-import {InitialComponent} from "./initial/initial.component";
-import {ResultsComponent} from "./results/results.component";
+import {InitialComponent} from './initial/initial.component';
+import {ResultsComponent} from './results/results.component';
 
 const appRoutes: Routes = [
   {path: '', component: InitialComponent},

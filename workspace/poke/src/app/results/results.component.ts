@@ -1,9 +1,9 @@
 import {Component, OnInit} from '@angular/core';
-import {ActivatedRoute, Router} from "@angular/router";
-import {PokemonApiService} from "../services/pokemon-api.service";
-import {ErrorHandlingService} from "../services/error-handling.service";
-import {WeaknessesService} from "../services/weaknesses.service";
-import {AdjectivesService} from "../services/adjectives.service";
+import {ActivatedRoute, Router} from '@angular/router';
+import {PokemonApiService} from '../services/pokemon-api.service';
+import {ErrorHandlingService} from '../services/error-handling.service';
+import {WeaknessesService} from '../services/weaknesses.service';
+import {AdjectivesService} from '../services/adjectives.service';
 
 @Component({
   selector: 'app-results',
@@ -11,6 +11,36 @@ import {AdjectivesService} from "../services/adjectives.service";
   styleUrls: ['./results.component.css']
 })
 export class ResultsComponent implements OnInit {
+
+  loading = true;
+
+  /**
+   * Arrar if all the unique weaknesses a pokemon has.
+   * @type {Array}
+   */
+  weaknessesArray = [];
+
+  calculatedAdjective = '';
+
+  missingNo = {
+    id: '-1',
+    name: 'missingNo',
+    height: 'Unknown',
+    weight: 'Unknown',
+    types: 'Unknown',
+    weaknesses: 'Unknown',
+    imagePath: '/assets/images/MissingNo.png'
+  };
+
+  pokemon = {
+    id: 'Loading',
+    name: 'Loading',
+    height: 'Loading',
+    weight: 'Loading',
+    types: 'Loading',
+    weaknesses: 'Loading',
+    imagePath: ''
+  };
 
   constructor(private router: Router,
               private route: ActivatedRoute,
@@ -23,39 +53,9 @@ export class ResultsComponent implements OnInit {
   ngOnInit() {
     if (this.route.snapshot.params['id'] !== undefined) {
       this.pokemon.id = this.route.snapshot.params['id'];
-      this.updatePokemon()
+      this.updatePokemon();
     }
   }
-
-  loading = true;
-
-  /**
-   * Arrar if all the unique weaknesses a pokemon has.
-   * @type {Array}
-   */
-  weaknessesArray = [];
-
-  calculatedAdjective = "";
-
-  missingNo = {
-    id: "-1",
-    name: 'missingNo',
-    height: 'Unknown',
-    weight: 'Unknown',
-    types: 'Unknown',
-    weaknesses: 'Unknown',
-    imagePath: '/assets/images/MissingNo.png'
-  };
-
-  pokemon = {
-    id: "Loading",
-    name: 'Loading',
-    height: 'Loading',
-    weight: 'Loading',
-    types: "Loading",
-    weaknesses: 'Loading',
-    imagePath: ''
-  };
 
   /**
    * This request looks at the current pokemon number, often set by the router, uses
@@ -63,7 +63,7 @@ export class ResultsComponent implements OnInit {
    * It also starts the process of calculating the weaknesses given the types.
    */
   updatePokemon() {
-    if (this.pokemon.id === "-1") {
+    if (this.pokemon.id === '-1') {
       this.loading = false;
       this.pokemon = this.missingNo;
     } else {
@@ -78,10 +78,10 @@ export class ResultsComponent implements OnInit {
           this.getTypes(pokemonDetails);
           this.getWeaknesses(pokemonDetails);
 
-          let pokemonFirstLetter = this.pokemon.name.charAt(0);
+          const pokemonFirstLetter = this.pokemon.name.charAt(0);
           this.adjectivesService.getAdjectiveStartingWithLetter(pokemonFirstLetter).subscribe(adjective => {
             this.calculatedAdjective = adjective.toLocaleUpperCase();
-          })
+          });
         }
       }, err => {
         this.errorHandlingService.handleError(err);
@@ -97,12 +97,12 @@ export class ResultsComponent implements OnInit {
   addTypeWeaknesses(weaknessesForType): string {
     let i;
     for (i = 0; i < weaknessesForType.length; i++) {
-      let capitalisedWeakness = this.capitaliseString(weaknessesForType[i]);
+      const capitalisedWeakness = this.capitaliseString(weaknessesForType[i]);
       if (this.weaknessesArray.indexOf(capitalisedWeakness) === -1) {
         this.weaknessesArray.push(capitalisedWeakness);
       }
     }
-    return this.weaknessesArray.join(", ");
+    return this.weaknessesArray.join(', ');
   }
 
   /**
@@ -123,7 +123,7 @@ export class ResultsComponent implements OnInit {
    * @returns {string}
    */
   capitaliseString(input: String) {
-    return input.charAt(0).toUpperCase() + input.slice(1)
+    return input.charAt(0).toUpperCase() + input.slice(1);
   }
 
   /**
@@ -133,20 +133,21 @@ export class ResultsComponent implements OnInit {
    * @param pokemonDetails
    */
   getTypes(pokemonDetails) {
-    let i,
-      typesArray = pokemonDetails['types'],
+    let i;
+
+    const typesArray = pokemonDetails['types'],
       typeStringArray = [];
 
     for (i = 0; i < typesArray.length; i++) {
       typeStringArray.push(this.capitaliseString(typesArray[i].type.name));
     }
-    this.pokemon.types = typeStringArray.join(", ");
+    this.pokemon.types = typeStringArray.join(', ');
   }
 
   /**
    * This uses the router to navigate back to the initial page.
    */
   showInitial() {
-    this.router.navigate(['initial'])
+    this.router.navigate(['initial']);
   }
 }
